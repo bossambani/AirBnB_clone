@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Defines a unittest for the basemodel"""
 import unittest
-from  models.my_model import BaseModel
+from models.my_model import BaseModel
 from datetime import datetime
 import uuid
 
@@ -24,42 +24,46 @@ class TestBaseModel(unittest.TestCase):
         """
         verify that the dictionary contains all attributes of the instance,
         Check that the `'__class__'` key is present and has the corect value,
-        Ensures that the datetime attributes(`created_at` and `updated_at`) 
+        Ensures that the datetime attributes(`created_at` and `updated_at`)
         are formatted correctly in ISO format
         """
 
-        #convert BaseModel instance to dictionary
+        # convert BaseModel instance to dictionary
         dict_rep = self.my_model.to_dict()
 
-        #checks that all the attributes are present in the dictionary
+        # checks that all the attributes are present in the dictionary
         self.assertIn('id', dict_rep)
         self.assertIn('created_at', dict_rep)
         self.assertIn('updated_at', dict_rep)
 
-        #checks that '__class__' key has the correct value
+        # checks that '__class__' key has the correct value
         self.assertEqual(dict_rep['__class__'], 'BaseModel')
 
-        #checks that datetime attribute are formatted correctly
+        # checks that datetime attribute are formatted correctly
         self.assertTrue(isinstance(dict_rep['created_at'], str))
         self.assertTrue(isinstance(dict_rep['updated_at'], str))
 
     def test__str__(self):
         """
-        Testing if the sting representation contains the class name, id attributes
+        Testing if the sting representation contains the class name,
+        id attributes
         """
         output = str(self.my_model)
-        expected_output = f"[{self.my_model.__class__.__name__}] ({self.my_model.id}) {self.my_model.__dict__}"
+        expected_output = f"[{self.my_model.__class__.__name__}]
+        ({self.my_model.id}) {self.my_model.__dict__}"
         self.assertEqual(output, expected_output)
 
     def test_valid_id_UUID(self):
         """
-        verifies that the 'id' attribute of the `BaseModel` instance is a valid UUID
+        verifies that the 'id' attribute of the `BaseModel` instance
+        is a valid UUID
         """
         self.assertTrue(uuid.UUID(self.my_model.id))
 
     def test_created_at_and_updated_at_have_different_values(self):
         """
-        Tesets if the created_at attribute and updated_at attributes are different
+        Tesets if the created_at attribute and updated_at attributes
+        are different
         """
         self.my_model.save()
         self.assertNotEqual(self.my_model.created_at, self.my_model.updated_at)
@@ -80,7 +84,6 @@ class TestBaseModel(unittest.TestCase):
         model2 = BaseModel()
         self.assertNotEqual(model1.id, model2.id)
 
-
     def test_attribute_access(self):
         """
         verifies that all attributes can directly be accessed
@@ -90,12 +93,5 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.my_model, 'updated_at'))
 
 
-
-
-
-
-
-
 if __name__ == '__main__':
     unittest.main()
-
