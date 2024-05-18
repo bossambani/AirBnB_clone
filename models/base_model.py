@@ -2,6 +2,7 @@
 """Defines the main class"""
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -12,7 +13,8 @@ class BaseModel:
         """Initializes the required attributes for the class"""
         if kwargs:
             for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
+                if (key in ["created_at", "updated_at"] and
+                        isinstance(key, str)):
                     value = datetime.fromisoformat(value)
                 if key != '__class__':
                     setattr(self, key, value)
@@ -20,6 +22,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -36,6 +39,7 @@ class BaseModel:
         when the object is modified
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         dict_rep = self.__dict__
