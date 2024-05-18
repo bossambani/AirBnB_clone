@@ -1,7 +1,7 @@
-#!/usr/bin/python3
+#!/usr/bin/python3i
 """Defines a unittest for the basemodel"""
 import unittest
-from models.my_model import BaseModel
+from models.base_model import BaseModel
 from datetime import datetime
 import uuid
 
@@ -11,6 +11,38 @@ class TestBaseModel(unittest.TestCase):
     def setUp(self):
         """Automatically called for every single test we run"""
         self.my_model = BaseModel()
+
+    def test_default_initilization(self):
+        """
+        checks if the attributes are instances of the initialized type
+        and if the created_at and updated_at are equal
+        """
+        self.assertTrue(isinstance(self.my_model.id, str))
+        self.assertIsInstance(self.my_model.updated_at, datetime)
+        self.assertIsInstance(self.my_model.created_at, datetime)
+        self.assertEqual(self.my_model.created_at, self.my_model.updated_at)
+
+    def test_kwargs_instance_representation(self):
+        """
+        checks if the kwargs implementation converts back the values stored to
+        the initial state of the data
+        """
+
+        my_data = {
+            'id': '1234567334343498',
+            'created_at': '2024-05-16T19:47:49.727335',
+            'updated_at': '2024-05-16T19:47:49.727335'
+            }
+        my_model1 = BaseModel(**my_data)
+        self.assertEqual(my_model1.id, '1234567334343498')
+        self.assertEqual(
+                my_model1.created_at,
+                datetime.fromisoformat('2024-05-16T19:47:49.727335')
+                )
+        self.assertEqual(
+                my_model1.updated_at,
+                datetime.fromisoformat('2024-05-16T19:47:49.727335')
+                )
 
     def test_save_updates_updated_at(self):
         """Defies a test method which checks if the updated_at attribute
@@ -49,8 +81,9 @@ class TestBaseModel(unittest.TestCase):
         id attributes
         """
         output = str(self.my_model)
-        expected_output = f"[{self.my_model.__class__.__name__}]
-        ({self.my_model.id}) {self.my_model.__dict__}"
+        expected_output = (
+                f"[BaseModel] ({self.my_model.id}) {self.my_model.__dict__}"
+                )
         self.assertEqual(output, expected_output)
 
     def test_valid_id_UUID(self):
