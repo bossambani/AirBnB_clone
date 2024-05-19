@@ -13,9 +13,9 @@ class BaseModel:
         """Initializes the required attributes for the class"""
         if kwargs:
             for key, value in kwargs.items():
-                if (key in ["created_at", "updated_at"] and
-                        isinstance(key, str)):
-                    value = datetime.fromisoformat(value)
+                if key in ["created_at", "updated_at"]:
+                        if isinstance(value, str):
+                            value = datetime.fromisoformat(value)
                 if key != '__class__':
                     setattr(self, key, value)
         else:
@@ -44,7 +44,9 @@ class BaseModel:
     def to_dict(self):
         dict_rep = self.__dict__
         dict_rep['__class__'] = self.__class__.__name__
-        dict_rep['created_at'] = dict_rep['created_at'].isoformat()
-        dict_rep['updated_at'] = dict_rep['updated_at'].isoformat()
+        if isinstance(dict_rep['created_at'], datetime):
+            dict_rep['created_at'] = dict_rep['created_at'].isoformat()
+        if isinstance(dict_rep['updated_at'], datetime):
+            dict_rep['updated_at'] = dict_rep['updated_at'].isoformat()
 
         return dict_rep

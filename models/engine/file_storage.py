@@ -2,7 +2,9 @@
 """Defines class FileStorage"""
 import json
 import os
+from datetime import datetime
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -39,10 +41,23 @@ class FileStorage:
                 dict_rep = json.load(file)
                 classes = {
                         "BaseModel": BaseModel,
+                        "User": User,
+                        "State": State,
+                        "City": City,
+                        "Amenity": Amenity,
+                        "Place": Place,
+                        "Review": Review
                         }
                 for key, value in dict_rep.items():
                     class_name = key.split('.')[0]
                     if class_name in classes:
+                        #Convert created_at and updated_at back to datetime
+                        if 'created_at' in value and isinstance(value['created_at'], str):
+                            value['created_at'] = datetime.fromisoformat(value['created_at'])
+                        if 'updated_at' in value and isinstance(value['updated_at'], str):
+                            value['updated_at'] = datetime.fromisoformat(value['updated_at'])
+
+
                         obj = classes[class_name](**value)
                         self.__objects[key] = obj
 
