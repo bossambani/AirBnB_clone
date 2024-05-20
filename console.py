@@ -16,28 +16,16 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
     prompt = "(hbnb) "
-    __classes = {"BaseModel","User", "State", "City", "Place", "Amenity", "Review"}
+    __classes = {
+            "BaseModel",
+            "User",
+            "State",
+            "City",
+            "Place",
+            "Amenity",
+            "Review"
+            }
 
-
-    '''def parse(arg):
-        curly_braces = re.search(r"\{(.*?)\}", arg)
-        brackets = re.search(r"\[(.*?)\]", arg)
-        if curly_braces is None:
-            if brackets is None:
-                return [i.strip(",") for i in split(arg)]
-            else:
-                lexer = split(arg[:brackets.span()[0]])
-                retl = [i.strip(",") for i in lexer]
-                retl.append(brackets.group())
-                return retl
-        else:
-            lexer = split(arg[:curly_braces.span()[0]])
-            retl = [i.strip(",") for i in lexer]
-            retl.append(curly_braces.group())
-            return retl
-
-
-'''
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
@@ -76,7 +64,8 @@ class HBNBCommand(cmd.Cmd):
 
     def help_create(self):
         """displays the help information for create command"""
-        print("Create a new instance of BaseModel, save it to the JSON file, and print the id")
+        print("Create a new instance of BaseModel, save it to the JSON file, \
+        and print the id")
         print("usage: create <class name>")
 
     def do_show(self, arg):
@@ -99,8 +88,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-
-
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id
         (save the change into the JSON file)"""
@@ -120,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
             else:
                 print("** no instance found **")
-                #deletes the instance and save the changes
+                # deletes the instance and save the changes
 
     def do_all(self, arg):
         """Usage: all or all <class> or <class>.all()
@@ -166,66 +153,67 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_update(self, arg):
-       """
-       Update an instance by adding or updating an attribute.
-       Usage: update <class_name> <id> <attribute_name> "<attribute_value>"
-       """
-       commands = shlex.split(arg)
+        """
+        Update an instance by adding or updating an attribute.
+        Usage: update <class_name> <id> <attribute_name> "<attribute_value>"
+        """
+        commands = shlex.split(arg)
 
-       if len(commands) == 0:
-           print("** class name missing **")
-       elif commands[0] not in self.__classes:
-           print("** class doesn't exist **")
-       elif len(commands) < 2:
-           print("** instance id missing **")
-       else:
-           objects = storage.all()
+        if len(commands) == 0:
+            print("** class name missing **")
+        elif commands[0] not in self.__classes:
+            print("** class doesn't exist **")
+        elif len(commands) < 2:
+            print("** instance id missing **")
+        else:
+            objects = storage.all()
 
-           key = "{}.{}".format(commands[0], commands[1])
-           if key not in objects:
-               print("** no instance found **")
-           elif len(commands) < 3:
-               print("** attribute name missing **")
-           elif len(commands) < 4:
-               print("** value missing **")
-           else:
-               obj = objects[key]
-               curly_braces = re.search(r"\{(.*?)\}", arg)
+            key = "{}.{}".format(commands[0], commands[1])
+            if key not in objects:
+                print("** no instance found **")
+            elif len(commands) < 3:
+                print("** attribute name missing **")
+            elif len(commands) < 4:
+                print("** value missing **")
+            else:
+                obj = objects[key]
+                curly_braces = re.search(r"\{(.*?)\}", arg)
 
-               if curly_braces:
-                   try:
-                       str_data = curly_braces.group(1)
+                if curly_braces:
+                    try:
+                        str_data = curly_braces.group(1)
 
-                       arg_dict = ast.literal_eval("{" + str_data + "}")
+                        arg_dict = ast.literal_eval("{" + str_data + "}")
 
-                       attribute_names = list(arg_dict.keys())
-                       attribute_values = list(arg_dict.values())
-                       try:
-                           attr_name1 = attribute_names[0]
-                           attr_value1 = attribute_values[0]
-                           setattr(obj, attr_name1, attr_value1)
-                       except Exception:
-                           pass
-                       try:
-                           attr_name2 = attribute_names[1]
-                           attr_value2 = attribute_values[1]
-                           setattr(obj, attr_name2, attr_value2)
-                       except Exception:
-                           pass
-                   except Exception:
-                       pass
-               else:
+                        attribute_names = list(arg_dict.keys())
+                        attribute_values = list(arg_dict.values())
+                        try:
+                            attr_name1 = attribute_names[0]
+                            attr_value1 = attribute_values[0]
+                            setattr(obj, attr_name1, attr_value1)
+                        except Exception:
+                            pass
+                        try:
+                            attr_name2 = attribute_names[1]
+                            attr_value2 = attribute_values[1]
+                            setattr(obj, attr_name2, attr_value2)
+                        except Exception:
+                            pass
 
-                   attr_name = commands[2]
-                   attr_value = commands[3]
+                    except Exception:
+                        pass
+                else:
 
-                   try:
-                       attr_value = eval(attr_value)
-                   except Exception:
-                       pass
-                   setattr(obj, attr_name, attr_value)
+                    attr_name = commands[2]
+                    attr_value = commands[3]
 
-               obj.save()
+                    try:
+                        attr_value = eval(attr_value)
+                    except Exception:
+                        pass
+                    setattr(obj, attr_name, attr_value)
+
+                obj.save()
 
     def default(self, arg):
         """
@@ -268,6 +256,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("*** Unknown syntax: {}".format(arg))
             return False
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
