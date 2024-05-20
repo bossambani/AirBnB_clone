@@ -38,19 +38,19 @@ class HBNBCommand(cmd.Cmd):
             print("**class name missing**")
             return
         try:
-            #check if the name exists
+            # check if the name exists
             model_class = eval(arg)
         except NameError:
             print("**class doesn't exist**")
             return
-        #create a new instance
+        # create a new instance
         new_instace = model_class()
         new_instace.save()
         print(new_instace.id)
 
     def help_create(self):
         """displays the help information for create command"""
-        print("Create a new instance of BaseModel, save it to the JSON file, and print the id")
+        print("Create and save a new BaseModel instance, then print its id.")
         print("usage: create <class name>")
 
     def do_show(self, arg):
@@ -70,15 +70,12 @@ class HBNBCommand(cmd.Cmd):
         if len(arguments) < 2:
             print("**instance id missing**")
             return
-        
         id_instance = arguments[1]
         key = f'{class_name}.{id_instance}'
         if key not in storage.all():
             print("**no instance found**")
             return
         print(storage.all()[key])
-
-
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id
@@ -103,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
         if key not in storage.all():
             print("**no instance found**")
             return
-        #deletes the instance and save the changes
+        # deletes the instance and save the changes
         del storage.all()[key]
         storage.save()
 
@@ -111,5 +108,5 @@ class HBNBCommand(cmd.Cmd):
 
 
 
-if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    if __name__ == '__main__':
+        HBNBCommand().cmdloop()
