@@ -65,21 +65,36 @@ class HBNBCommand(cmd.Cmd):
 
         if len(commands) == 0:
             print("**class name missing**")
+<<<<<<< HEAD
         elif commands[0] not in self.__classes:
             print("** class doesn't exist **")
         else:
             new_instance = BaseModel()
             new_instance.save()
             print(new_instance.id)
+=======
+            return
+        try:
+            # check if the name exists
+            model_class = eval(arg)
+        except NameError:
+            print("**class doesn't exist**")
+            return
+        # create a new instance
+        new_instace = model_class()
+        new_instace.save()
+        print(new_instace.id)
+>>>>>>> 3dbe971a598d711c07e4ac4c6d1014a863ba1fc9
 
     def help_create(self):
         """displays the help information for create command"""
-        print("Create a new instance of BaseModel, save it to the JSON file, and print the id")
+        print("Create and save a new BaseModel instance, then print its id.")
         print("usage: create <class name>")
 
     def do_show(self, arg):
         """ Prints the string representation of an instance based on the
         class name and id"""
+<<<<<<< HEAD
         commands = shlex.split(arg)
 
         if len(commands) == 0:
@@ -96,12 +111,33 @@ class HBNBCommand(cmd.Cmd):
                 print(objects[key])
             else:
                 print("** no instance found **")
+=======
+        arguments = arg.split()
 
+        if len(arguments) == 0:
+            print("***class name missing**")
+            return
+        class_name = arguments[0]
 
+        try:
+            model_class = eval(class_name)
+        except NameError:
+            print("**class doesn't exist**")
+        if len(arguments) < 2:
+            print("**instance id missing**")
+            return
+        id_instance = arguments[1]
+        key = f'{class_name}.{id_instance}'
+        if key not in storage.all():
+            print("**no instance found**")
+            return
+        print(storage.all()[key])
+>>>>>>> 3dbe971a598d711c07e4ac4c6d1014a863ba1fc9
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id
         (save the change into the JSON file)"""
+<<<<<<< HEAD
         commands = shlex.split(arg)
 
         if len(commands) == 0:
@@ -119,6 +155,31 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
                 #deletes the instance and save the changes
+=======
+        arguments = arg.split()
+
+        if len(arguments) == 0:
+            print("***class name missing**")
+            return
+        class_name = arguments[0]
+
+        try:
+            model_class = eval(class_name)
+        except NameError:
+            print("**class doesn't exist**")
+        if len(arguments) < 2:
+            print("**instance id missing**")
+            return
+
+        id_instance = arguments[1]
+        key = f'{class_name}.{id_instance}'
+        if key not in storage.all():
+            print("**no instance found**")
+            return
+        # deletes the instance and save the changes
+        del storage.all()[key]
+        storage.save()
+>>>>>>> 3dbe971a598d711c07e4ac4c6d1014a863ba1fc9
 
     def do_all(self, arg):
         """Usage: all or all <class> or <class>.all()
@@ -267,5 +328,10 @@ class HBNBCommand(cmd.Cmd):
             print("*** Unknown syntax: {}".format(arg))
             return False
 
+<<<<<<< HEAD
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
+=======
+    if __name__ == '__main__':
+        HBNBCommand().cmdloop()
+>>>>>>> 3dbe971a598d711c07e4ac4c6d1014a863ba1fc9
