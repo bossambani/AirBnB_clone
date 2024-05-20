@@ -50,3 +50,8 @@ class BaseModel:
             dict_rep['updated_at'] = dict_rep['updated_at'].isoformat()
 
         return dict_rep
+
+if __name__ == "__main__":
+    model = BaseModel()
+
+
