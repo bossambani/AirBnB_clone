@@ -1,4 +1,4 @@
-#!/usr/bin/python3i
+#!/usr/bin/python3
 """Defines a unittest for the basemodel"""
 import unittest
 from models.base_model import BaseModel
