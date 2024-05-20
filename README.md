@@ -31,15 +31,15 @@ To start the command interpreter, navigate to the root directory of the project 
 
 ### How to Use
 
-create <class name>: Creates a new instance of the specified class.
-show <class name> <id>: Prints the string representation of an instance based on the class name and id.
-destroy <class name> <id>: Deletes an instance based on the class name and id.
-all [class name]: Prints all string representations of all instances, or all instances of a specific class.
-update <class name> <id> <attribute name> "<attribute value>": Updates an instance based on the class name and id by adding or updating an attribute.
+- create <class name>: Creates a new instance of the specified class.
+- show <class name> <id>: Prints the string representation of an instance based on the class name and id.
+- destroy <class name> <id>: Deletes an instance based on the class name and id.
+- all [class name]: Prints all string representations of all instances, or all instances of a specific class.
+- update <class name> <id> <attribute name> "<attribute value>": Updates an instance based on the class name and id by adding or updating an attribute.
 
-###Contributors
+### Contributors
 This project was developed by the following contributors:
 
-Boss Ambaka (@bossambani)
-Elijah Akande (@EvaStrings)
-See the AUTHORS file for more details.
+- Boss Ambaka (@bossambani)
+- Elijah Akande (@EvaStrings)
+- See the AUTHORS file for more details.
