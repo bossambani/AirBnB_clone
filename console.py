@@ -35,6 +35,8 @@ class HBNBCommand(cmd.Cmd):
             retl = [i.strip(",") for i in lexer]
             retl.append(curly_braces.group())
             return retl
+
+
 '''
     def do_quit(self, arg):
         """Quit command to exit the program"""
