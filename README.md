@@ -3,11 +3,11 @@
 *Welcome to the AirBnB Clone project! This Project is a simplified version of the AirBnB web application*
 
 ## Table of Contents
--[Description](#description)
--[command Interpreter](#command-interpreter)
--[How to Start](#how-to-start)
--[How to Use](#how-to-use)
--[Contributors](#contributors)
+- [Description](#description)
+- [command Interpreter](#command-interpreter)
+- [How to Start](#how-to-start)
+- [How to Use](#how-to-use)
+- [Contributors](#contributors)
 
 
 ## Description
