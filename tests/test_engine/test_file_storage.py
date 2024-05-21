@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Defines a unit test fot the filestorage module"""
 import unittest
-import os
-import json
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from models.user import User
+import os
 
 
 
@@ -13,15 +13,29 @@ class TestFileStorage(unittest.TestCase):
     def setup(self):
         """Automatically called for every single test we run"""
         self.storage = FileStorage()
-        self.file_path = "file.json"
+        self.storage._FileStorage__file_path = 'test_file.json'
+        self.storage._FileStorage__objects = {}
 
-    def test_initialization(self):
+    def tearDown(self):
+        if os.path.exists('test_file.json'):
+            os.remove('test_file.jso')
+        
+    def test_save_and_reload(self):
         """
-        checks if the FileStorage is initialized to file.json and the object
-        to an empty dictionary
+        test saving and reloading
         """
-        self.assertEqual(self.storage.__objects, {})
-        self.assertEqual(self.storage.__file_path, "file.json")
+        obj = User()
+        obj.save()
+        self.assertTrue(os.path.exists('test_file.json'))
+        self.storage.reload()
+        key = f"User.{obj.id}"
+        self.assertIn(key, self.storage.all())
+
+    def test_new(self):
+        obj = User()
+        self.storage.new(obj)
+        key = f"User.{obj.id}"
+        self.assertIn(key, self.storage.all())
 
 if __name__ == "__main__":
     unittest.main()
