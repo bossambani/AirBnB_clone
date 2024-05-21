@@ -1,4 +1,4 @@
-**AirBnb Clone - The Console** 
+# AirBnb Clone - The Console
 
 *Welcome to the AirBnB Clone project! This Project is a simplified version of the AirBnB web application*
 
