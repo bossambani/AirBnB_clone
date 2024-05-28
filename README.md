@@ -40,6 +40,6 @@ To start the command interpreter, navigate to the root directory of the project 
 ### Contributors
 This project was developed by the following contributors:
 
-- Boss Ambaka (@bossambani)
-- Elijah Akande (@EvaStrings)
+- Boss Ambaka (https://github.com/bossambani)
+- Elijah Akande (https://github.com/Evastrings)
 - See the AUTHORS file for more details.
